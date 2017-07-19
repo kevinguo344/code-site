@@ -2,7 +2,19 @@ var camera, scene, renderer, controls;
 var camPositions = [];
 var currentPos;
 var roomObject = [];
-var objColor = [];
+
+
+var redMat = new THREE.MeshToonMaterial( { color: 0xff3300, specular: 0x555555, shininess: 30 } );
+var blueMat = new THREE.MeshToonMaterial( {color: 0x90C3D4, specular: 0x90C3D4, shininess: 30} );
+var greenMat = new THREE.MeshToonMaterial( {color: 0xA1D490, specular: 0xA1D490, shininess: 30} );
+var purpleMat = new THREE.MeshToonMaterial( { color: 0x6F6CC5, specular: 0x555555, shininess: 30 } );
+
+var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(), redMat);
+var iscoachedron = new THREE.Mesh(new THREE.IcosahedronGeometry(20), blueMat);
+var sphere = new THREE.Mesh(new THREE.SphereGeometry(), greenMat);
+var torus = new THREE.Mesh(new THREE.TorusGeometry(50, 10, 16, 100), purpleMat);
+roomObject.push(cylinder, iscoachedron, sphere, torus);
+
 init();
 animate();
 
@@ -20,11 +32,6 @@ function init() {
 
 	// Add scene elements
 	addSceneElements();
-
-	var redMat = new THREE.MeshPhongMaterial( { color: 0xff3300, specular: 0x555555, shininess: 30 } );
-	var blueMat = new THREE.MeshPhongMaterial( {color: 0x90C3D4, specular: 0x90C3D4, shininess: 30} );
-	var greenMat = new THREE.MeshPhongMaterial( {color: 0xA1D490, specular: 0xA1D490, shininess: 30} );
-	var purpleMat = new THREE.MeshPhongMaterial( { color: 0x6F6CC5, specular: 0x555555, shininess: 30 } );
 
 	currentPos = 0;
 
@@ -63,14 +70,25 @@ function init() {
 }
 
 function addLights(centerX ,maxY) {
-	var light = new THREE.PointLight(0xFFFFFF, 0.35);
-	light.position.set(centerX, maxY - 20, 0);
-	scene.add(light);
-	scene.add(new THREE.PointLightHelper(light, 10));
+	var light1 = new THREE.PointLight(0xFFFFFF, 1, 300, 2);
+	light1.position.set(centerX, maxY - 50, 130);
+	scene.add(light1);
+
+	var light2 = new THREE.PointLight(0xFFFFFF, 1, 300, 2);
+	light2.position.set(centerX, maxY - 150, 0);
+	scene.add(light2);
+
+	var light3 = new THREE.PointLight(0xFFFFFF, 1, 300, 2);
+	light3.position.set(centerX, maxY - 150, 130);
+	scene.add(light3);
+
+	var light4 = new THREE.PointLight(0xFFFFFF, 0.1, 300, 2);
+	light4.position.set(centerX, maxY - 100, 250);
+	scene.add(light4);
 }
 
 function addSceneElements() {
-	for(var i = 0; i < 5; i++){
+	for(var i = 0; i < 4; i++){
 		camPositions.push(createRoom(i));
 	}
 }
@@ -83,13 +101,14 @@ function createRoom(i) {
 	var minX = centerX - 100;
 	var maxX = centerX + 100;
 
-	var centerY = Math.floor(Math.random()*100);
+	var centerY = Math.floor(Math.random()*300);
 	if(i == 0){centerY = 100;}
 	var minY = centerY - 100;
 	var maxY = centerY + 100;
 	var z = -100;
 
 	var material = new THREE.MeshPhongMaterial( {color: 0xFFFFFF, specular: 0xFFFFFF, shininess: 0.1} );
+	//var material = new THREE.MeshToonMaterial();
 
 	var rightWall = new THREE.Mesh(cube, material);
 	rightWall.rotation.x = Math.PI/180 * 90;
@@ -115,6 +134,11 @@ function createRoom(i) {
 	var floor = new THREE.Mesh(cube, material);
 	floor.position.set(centerX, minY, 0);
 	scene.add(floor);
+
+	var a = roomObject[i];
+	a.position.set(centerX, centerY, 100);
+	//console.log(a.position);
+	scene.add(a);
 
 	addLights(centerX, maxY);
 	return [centerX, centerY];
