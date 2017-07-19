@@ -3,6 +3,8 @@ var camPositions = [];
 var currentPos;
 var roomObject = [];
 
+var leftButton, rightButton;
+
 var redMat = new THREE.MeshToonMaterial( { color: 0xff3300, specular: 0x555555, shininess: 30 } );
 var blueMat = new THREE.MeshToonMaterial( {color: 0x90C3D4, specular: 0x90C3D4, shininess: 30} );
 var greenMat = new THREE.MeshToonMaterial( {color: 0xA1D490, specular: 0xA1D490, shininess: 30} );
@@ -13,6 +15,37 @@ var iscoachedron = new THREE.Mesh(new THREE.IcosahedronGeometry(20), blueMat);
 var sphere = new THREE.Mesh(new THREE.SphereGeometry(), greenMat);
 var torus = new THREE.Mesh(new THREE.TorusGeometry(50, 10, 16, 100), purpleMat);
 roomObject.push(cylinder, iscoachedron, sphere, torus);
+
+// Get the modal
+var modal = document.getElementById('modal');
+var modalContent = document.getElementById('modal-content');
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+	var h1 = document.getElementById("title");
+	var p = document.getElementById("content");
+	h1.innerHTML = "";
+	p.innerHTML = "";
+	modal.style.display = "none";
+	leftButton.style.display = "block";
+	rightButton.style.display = "block";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+		var h1 = document.getElementById("title");
+		var p = document.getElementById("content");
+		h1.innerHTML = "";
+		p.innerHTML = "";
+		modal.style.display = "none";
+		leftButton.style.display = "block";
+		rightButton.style.display = "block";
+    }
+}
 
 init();
 animate();
@@ -44,10 +77,10 @@ function init() {
 
 	document.addEventListener( 'click', onDocumentMouseDown, false );
 	//var projector = new THREE.Projector();
+	modal.style.display = "none";
 
-
-	var leftButton = document.getElementById("leftButton");
-	var rightButton = document.getElementById("rightButton");
+	leftButton = document.getElementById("leftButton");
+	rightButton = document.getElementById("rightButton");
 
 	leftButton.addEventListener('click', function(){
 		if(currentPos > 0){
@@ -208,6 +241,16 @@ function showInfo(typeId) {
 		name: "Torus",
 		description: "Some nonsense about doughnuts (because you want your doughnuts to be made of 'dough', not 'do')."
 	}];
-	console.log(info[typeId].name);
-	console.log(info[typeId].description);
+
+	var h1 = document.getElementById("title");
+	h1.innerHTML = info[typeId].name;
+	var p = document.getElementById("content");
+	p.innerHTML = info[typeId].description;
+	modal.style.display = "inline";
+	//renderer.setClearColor(0x000000, 0);
+	leftButton.style.display = "none";
+	rightButton.style.display = "none";
+
+	//console.log(info[typeId].name);
+	//console.log(info[typeId].description);
 }
