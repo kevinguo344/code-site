@@ -2,8 +2,12 @@ var camera, scene, renderer, controls;
 var camPositions = [];
 var currentPos;
 var roomObject = [];
+var objColor = [];
 init();
 animate();
+
+//demonstrate clicking on objects works
+//demonstrate moving camera works
 
 function init() {
 
@@ -17,27 +21,41 @@ function init() {
 	// Add scene elements
 	addSceneElements();
 
-	// Sphere
-	/*
-	var sphere = new THREE.Mesh(new THREE.SphereGeometry(20, 70, 20), redMat);
-	sphere.position.set(-25, 100, -20);
-	scene.add(sphere);
+	var redMat = new THREE.MeshPhongMaterial( { color: 0xff3300, specular: 0x555555, shininess: 30 } );
+	var blueMat = new THREE.MeshPhongMaterial( {color: 0x90C3D4, specular: 0x90C3D4, shininess: 30} );
+	var greenMat = new THREE.MeshPhongMaterial( {color: 0xA1D490, specular: 0xA1D490, shininess: 30} );
+	var purpleMat = new THREE.MeshPhongMaterial( { color: 0x6F6CC5, specular: 0x555555, shininess: 30 } );
 
-	// Knot thingy
-	var knot = new THREE.Mesh(new THREE.TorusKnotGeometry( 40, 3, 100, 16 ), purpleMat);
-	knot.position.set(0, 60, 30);
-	scene.add(knot);*/
-
-	var btn = document.createElement("BUTTON");
+	currentPos = 0;
 
 	// Create the WebGL Renderer
 	renderer = new THREE.WebGLRenderer({alpha: true});
-	//renderer = new THREE.WebGLRenderer();
-	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.setClearColor(0x000000, 0);
 
 	// Append the renderer to the body
-	document.body.appendChild( renderer.domElement );
+	document.body.appendChild(renderer.domElement);
+
+	var leftButton = document.getElementById("leftButton");
+	var rightButton = document.getElementById("rightButton");
+
+	leftButton.addEventListener('click', function(){
+		if(currentPos > 0){
+			currentPos--;
+			var newPos = camPositions[currentPos];
+			camera.position.set(newPos[0], newPos[1], 250);
+			animate();
+		}
+	});
+
+	rightButton.addEventListener('click', function(){
+		if(currentPos < camPositions.length - 1){
+			currentPos++;
+			var newPos = camPositions[currentPos];
+			camera.position.set(newPos[0], newPos[1], 250);
+			animate();
+		}
+	});
 
 	// Add a resize event listener
 	window.addEventListener( 'resize', onWindowResize, false );
@@ -52,24 +70,9 @@ function addLights(centerX ,maxY) {
 }
 
 function addSceneElements() {
-	
-	for(var i = 0; i < 3; i++){
+	for(var i = 0; i < 5; i++){
 		camPositions.push(createRoom(i));
 	}
-
-	//createRoom(0);
-
-	// Sphere
-	/*
-	var sphere = new THREE.Mesh(new THREE.SphereGeometry(20, 70, 20), redMat);
-	sphere.position.set(-25, 100, -20);
-	scene.add(sphere);*/
-
-	// Knot thingy
-	/*
-	var knot = new THREE.Mesh(new THREE.TorusKnotGeometry( 40, 3, 100, 16 ), purpleMat);
-	knot.position.set(0, 60, 30);
-	scene.add(knot);*/
 }
 
 function createRoom(i) {
@@ -118,12 +121,16 @@ function createRoom(i) {
 }
 
 function animate() {
-	renderer.render( scene, camera );
-	requestAnimationFrame( animate );
+	renderer.render(scene, camera);
+	requestAnimationFrame(animate);
 }
 
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
 	renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+function onDocumentMouseDown() {
+
 }
