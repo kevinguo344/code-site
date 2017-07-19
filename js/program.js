@@ -3,7 +3,6 @@ var camPositions = [];
 var currentPos;
 var roomObject = [];
 
-
 var redMat = new THREE.MeshToonMaterial( { color: 0xff3300, specular: 0x555555, shininess: 30 } );
 var blueMat = new THREE.MeshToonMaterial( {color: 0x90C3D4, specular: 0x90C3D4, shininess: 30} );
 var greenMat = new THREE.MeshToonMaterial( {color: 0xA1D490, specular: 0xA1D490, shininess: 30} );
@@ -42,6 +41,10 @@ function init() {
 
 	// Append the renderer to the body
 	document.body.appendChild(renderer.domElement);
+
+	document.addEventListener( 'click', onDocumentMouseDown, false );
+	//var projector = new THREE.Projector();
+
 
 	var leftButton = document.getElementById("leftButton");
 	var rightButton = document.getElementById("rightButton");
@@ -155,6 +158,56 @@ function onWindowResize() {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-function onDocumentMouseDown() {
+function onDocumentMouseDown(event) {
+	//Code taken from : https://stackoverflow.com/questions/29366109/three-js-three-projector-has-been-moved-to	
+	var raycaster = new THREE.Raycaster(); // create once
+	var mouse = new THREE.Vector2(); // create once
 
+	mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+	raycaster.setFromCamera(mouse, camera);
+
+	var intersects = raycaster.intersectObjects(scene.children);
+
+	if(intersects.length > 0){
+		if(intersects[0].object.geometry.type != "BoxGeometry"){
+			var type = intersects[0].object.geometry.type;
+			console.log(intersects[0].object.geometry.type);
+			if(type == "CylinderGeometry"){
+				showInfo(0);
+			}
+			else if(type == "IcosahedronGeometry"){
+				showInfo(1);
+			}
+			else if(type == "SphereGeometry"){
+				showInfo(2);
+			}
+			else{
+				showInfo(3);
+			}
+		}
+	}
+}
+
+function showInfo(typeId) {
+	var info = [
+	{
+		name: "Cylinder",
+		description: "Some nonsense about cylinders."
+	},
+	{
+		name: "Icosahedron",
+		description: "Some nonsense about iscoachedrons, whatever they are."
+	},
+	{
+		name: "Sphere",
+		description: "Some nonsense about spheres even though this one looks like a lumpy orange."
+	},
+	{
+		name: "Torus",
+		description: "Some nonsense about doughnuts (because you want your doughnuts to be made of 'dough', not 'do')."
+	}];
+	console.log(info[typeId].name);
+	console.log(info[typeId].description);
 }
