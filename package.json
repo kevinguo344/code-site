@@ -1,0 +1,25 @@
+{
+  "name": "code-site",
+  "version": "1.0.0",
+  "description": "A site to make understanding building codes easier and make home living in NY safer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinguo344/code-site.git"
+  },
+  "author": "S.H.I.E.L.D.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevinguo344/code-site/issues"
+  },
+  "homepage": "https://github.com/kevinguo344/code-site#readme",
+  "dependencies": {
+    "express": "^4.15.4",
+    "mongoose": "^4.11.12",
+    "nodemon": "^1.12.1"
+  }
+}
