@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var port = process.env.PORT || 8080;
 var Location = require('./api/models/locModel');
+var Content = require('./api/models/contentModel');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/locdb', { useMongoClient: true });
@@ -13,8 +14,12 @@ mongoose.connect('mongodb://localhost/locdb', { useMongoClient: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var routes = require('./api/routes/locRoutes');
+var routes = require('./api/routes/routes');
 routes(app);
+
+app.use(function(req, res) {
+	res.status(404).send({url: req.originalUrl + ' not found'})
+});
 
 app.listen(port);
 console.log("Started api at port: " + port);
