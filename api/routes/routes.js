@@ -4,10 +4,6 @@ module.exports = function(app) {
 	var locationList = require('../controllers/locController');
 	var contentList = require('../controllers/contentController');
 
-	app.get('/', function(req, res) {
-		res.send('Please use /api/...');
-	});
-
 	app.route('/api/locations')
 		.get(locationList.list_all_locations)
 		.post(locationList.create_a_location);
