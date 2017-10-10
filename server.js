@@ -18,19 +18,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/static", express.static(__dirname + "/static"));
 
-var routes = require('./api/routes/routes');
-routes(app);
-
-app.use(function(req, res) {
-	res.status(404).send({url: req.originalUrl + ' not found'})
-});
-
 app.get('/', function(req, res) {
 	res.render('home');
 });
 
 app.get('/search', function(req, res) {
 	res.render('search');
+});
+
+var routes = require('./api/routes/routes');
+routes(app);
+
+app.use(function(req, res) {
+	res.status(404).send({url: req.originalUrl + ' not found'})
 });
 
 app.listen(port);
