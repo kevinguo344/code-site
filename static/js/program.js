@@ -25,7 +25,6 @@ function init() {
 	document.body.appendChild(renderer.domElement);
 }
 
-
 function addSceneElements() {
 	var room = new THREE.CubeGeometry(50, 50, 50);
 	var matColor = new THREE.Color("#ECECEC");
