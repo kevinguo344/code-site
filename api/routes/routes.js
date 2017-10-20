@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function(app) {
-	var locationList = require('../controllers/locController');
-	var contentList = require('../controllers/contentController');
+	var locationList = require('../controllers/locationController');
+	var itemList = require('../controllers/itemController');
 
 	app.route('/api/locations')
 		.get(locationList.list_all_locations)
@@ -13,12 +13,15 @@ module.exports = function(app) {
 		.put(locationList.update_a_location)
 		.delete(locationList.delete_a_location);
 
-	app.route('/api/content')
-		.get(contentList.list_all_content)
-		.post(contentList.create_content);
+	app.route('/api/locations/:name.:format?')
+		.get(locationList.get_a_location);
 
-	app.route('/api/content/:contentId')
-		.get(contentList.read_content)
-		.put(contentList.update_content)
-		.delete(contentList.delete_content);
+	app.route('/api/item')
+		.get(itemList.list_all_content)
+		.post(itemList.create_content);
+
+	app.route('/api/item/:itemId')
+		.get(itemList.read_content)
+		.put(itemList.update_content)
+		.delete(itemList.delete_content);
 }

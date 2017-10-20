@@ -6,8 +6,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var port = process.env.PORT || 8080;
 
-var Location = require('./api/models/locModel');
-var Content = require('./api/models/contentModel');
+var Location = require('./api/models/locationModel');
+var Item = require('./api/models/itemModel');
 
 app.set("view engine", "ejs");
 

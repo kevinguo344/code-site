@@ -11,6 +11,14 @@ exports.list_all_locations = function (req, res) {
   });
 };
 
+exports.get_a_location = function (req, res) {
+	Location.findOne({name: req.params.name}, function(err, location){
+		if(err)
+			res.send(err);
+		res.json(location);
+	})
+}
+
 exports.create_a_location = function (req, res) {
 	var new_location = new Location(req.body);
 	new_location.save(function (err, location) {

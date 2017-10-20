@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Content = mongoose.model('Content');
+var Content = mongoose.model('Item');
 
 exports.list_all_content = function (req, res) {
 	Content.find({}, function(err, content) {

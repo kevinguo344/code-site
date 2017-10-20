@@ -16,9 +16,9 @@ var locationSchema = new Schema({
 		type: Array,
 		default: [0.0, 0.0, 0.0]
 	},
-	associated_data:{
+	items:{
 		type: Array,
-		default: [{name:"Some Name", info: "Some Info"}]
+		default: [{name:"Some Name", id: 0}]
 	}
 });
 
