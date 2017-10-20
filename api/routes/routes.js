@@ -9,19 +9,26 @@ module.exports = function(app) {
 		.post(locationList.create_a_location);
 
 	app.route('/api/locations/:locId')
-		.get(locationList.read_a_location)
-		.put(locationList.update_a_location)
-		.delete(locationList.delete_a_location);
+		.get(locationList.read_a_location_byID)
+		.put(locationList.update_a_location_byID)
+		.delete(locationList.delete_a_location_byID);
 
 	app.route('/api/locations/:name.:format?')
-		.get(locationList.get_a_location);
+		.get(locationList.read_a_location_byName)
+		.put(locationList.update_a_location_byName)
+		.delete(locationList.delete_a_location_byName);
 
-	app.route('/api/item')
-		.get(itemList.list_all_content)
-		.post(itemList.create_content);
+	app.route('/api/items')
+		.get(itemList.list_all_items)
+		.post(itemList.create_item);
 
-	app.route('/api/item/:itemId')
-		.get(itemList.read_content)
-		.put(itemList.update_content)
-		.delete(itemList.delete_content);
+	app.route('/api/items/:itemId')
+		.get(itemList.read_item_byID)
+		.put(itemList.update_item_byID)
+		.delete(itemList.delete_item_byID);
+
+	app.route('/api/items/:name.:format?')
+		.get(itemList.read_item_byName)
+		.put(itemList.update_item_byName)
+		.delete(itemList.delete_item_byName);
 }

@@ -26,15 +26,96 @@ function init() {
 }
 
 function getRoom(roomName){
-	$.getJSON({ "/api/locations" + roomName,
-		function(data){
-			console.log(data);
-		}
-	});
+	$.getJSON("/api/locations/", {"name": roomName})
+		.done(function(data) {
+			if(data != null){
+				console.log(data);
+			}
+		});
 }
 
-function addRoom(){
-	
+function fetchItem(name){
+	console.log(name);
+	/*$.getJSON("/api/items/", {_id: id})
+		.done(function(a){
+			console.log(a);
+		})*/
+}
+
+function addRoom(roomName, position, lookAt, items){
+	if(typeof position[0] == "number" && typeof lookAt[0] == "number" && typeof items == "object"){
+		var newRoom = {
+			name: roomName,
+			camera_position: position,
+			camera_lookAt: lookAt,
+			items: items
+		}
+		console.log(newRoom);
+		var response;
+		$.post("/api/locations", newRoom)
+			.done(function(data) {
+				response = data;
+			});
+	}
+}
+
+var n = "Kitchen";
+var p = [0.9, 0.7, 0.2];
+var l = [0.2, 0.3, 0.1];
+var i = [
+	{
+		id: "59e97d9d33771f0f8e720dae",
+		name: "Sink"
+	},
+	{
+		id: "59e97da433771f0f8e720daf",
+        name: "Wall"
+	},
+	{
+        id: "59e97da633771f0f8e720db0",
+        name: "Fire Alarm"
+	}
+]
+
+var n2 = "Bedroom";
+var p2 = [1.9, 1.7, 1.2];
+var l2 = [1.2, 1.3, 1.1];
+var i2 = [
+	{
+		id: "59e9853ae98ae114730e78bd",
+		name: "Bed"
+	},
+	{
+		id: "59e9853fe98ae114730e78be",
+        name: "Door"
+	}
+]
+
+var it1 = "Sink";
+var c1 = "This is a sink. It has this and that."
+
+var it2 = "Wall";
+var c2 = "This is a wall. It's a wall. What else do you want?"
+
+var it3 = "Fire Alarm";
+var c3 = "You need it";
+
+var it4 = "Bed";
+var c4 = "This doesn't do anything";
+
+var it5 = "Door";
+var c5 = "Have a door";
+
+function addItem(itemName, content){
+	var newItem = {
+		name: itemName,
+		info: content
+	}
+	//console.log(newItem);
+	$.post("/api/items", newItem)
+		.done(function(data) {
+			console.log(data);
+		});
 }
 
 function addSceneElements() {
