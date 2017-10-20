@@ -4,6 +4,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var locationSchema = new Schema({
+	_roomID:{
+		type: Schema.Types.ObjectId,
+		required: "Please give a unique ID"
+	},
 	name:{
 		type: String,
 		required: "Please name your new location"

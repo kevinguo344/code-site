@@ -42,9 +42,10 @@ function fetchItem(name){
 		})*/
 }
 
-function addRoom(roomName, position, lookAt, items){
+function addRoom(roomName, position, lookAt, items, id){
 	if(typeof position[0] == "number" && typeof lookAt[0] == "number" && typeof items == "object"){
 		var newRoom = {
+			_roomID: id,
 			name: roomName,
 			camera_position: position,
 			camera_lookAt: lookAt,
@@ -64,15 +65,15 @@ var p = [0.9, 0.7, 0.2];
 var l = [0.2, 0.3, 0.1];
 var i = [
 	{
-		id: "59e97d9d33771f0f8e720dae",
+		//id: "59e97d9d33771f0f8e720dae",
 		name: "Sink"
 	},
 	{
-		id: "59e97da433771f0f8e720daf",
+		//id: "59e97da433771f0f8e720daf",
         name: "Wall"
 	},
 	{
-        id: "59e97da633771f0f8e720db0",
+        //id: "59e97da633771f0f8e720db0",
         name: "Fire Alarm"
 	}
 ]
@@ -82,11 +83,11 @@ var p2 = [1.9, 1.7, 1.2];
 var l2 = [1.2, 1.3, 1.1];
 var i2 = [
 	{
-		id: "59e9853ae98ae114730e78bd",
+		//id: "59e9853ae98ae114730e78bd",
 		name: "Bed"
 	},
 	{
-		id: "59e9853fe98ae114730e78be",
+		//id: "59e9853fe98ae114730e78be",
         name: "Door"
 	}
 ]
@@ -106,8 +107,24 @@ var c4 = "This doesn't do anything";
 var it5 = "Door";
 var c5 = "Have a door";
 
+var it6 = "Test Post";
+var c6 = "Please ignore";
+
 function addItem(itemName, content){
 	var newItem = {
+		name: itemName,
+		info: content
+	}
+	//console.log(newItem);
+	$.post("/api/items", newItem)
+		.done(function(data) {
+			console.log(data);
+		});
+}
+
+function addItem2(itemName, content, itemID){
+	var newItem = {
+		_id: itemID,
 		name: itemName,
 		info: content
 	}

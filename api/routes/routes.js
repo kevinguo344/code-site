@@ -4,10 +4,12 @@ module.exports = function(app) {
 	var locationList = require('../controllers/locationController');
 	var itemList = require('../controllers/itemController');
 
+	//works
 	app.route('/api/locations')
 		.get(locationList.list_all_locations)
 		.post(locationList.create_a_location);
 
+	//works
 	app.route('/api/locations/:locId')
 		.get(locationList.read_a_location_byID)
 		.put(locationList.update_a_location_byID)
@@ -18,16 +20,18 @@ module.exports = function(app) {
 		.put(locationList.update_a_location_byName)
 		.delete(locationList.delete_a_location_byName);
 
+	//works
 	app.route('/api/items')
 		.get(itemList.list_all_items)
 		.post(itemList.create_item);
 
+	//works
 	app.route('/api/items/:itemId')
 		.get(itemList.read_item_byID)
 		.put(itemList.update_item_byID)
 		.delete(itemList.delete_item_byID);
 
-	app.route('/api/items/:name.:format?')
+	app.route('/api/items/:name')
 		.get(itemList.read_item_byName)
 		.put(itemList.update_item_byName)
 		.delete(itemList.delete_item_byName);
